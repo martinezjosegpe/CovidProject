@@ -3,24 +3,24 @@
 
 SELECT [continent]
       ,[location]
-	  ,[population]
+      ,[population]
       ,[date]
       ,[total_cases]
       ,[total_deaths]
       ,[total_tests]
       ,[positive_rate]
       ,[people_fully_vaccinated]
-	  ,[icu_patients]
+      ,[icu_patients]
       ,[hosp_patients]
       ,[hospital_beds_per_thousand]
   FROM [CovidProject].[dbo].[owid-covid-data]
 
 
-    --All columns where imported as varchar() so I will convert columns data from varchar() 
-	--to the correct data type into a temporary table 
+         --All columns where imported as varchar() so I will convert columns data from varchar() 
+	 --to the correct data type into a temporary table 
 	 --In the Continent column there was some empty columns but were not NULL values but empty string
-  --I used the LEN() function to filter the empty strings in the Continent column and the IS NOT NULL to make sure no NULL values were in the new table view 
-  drop table #covid_summary
+         --I used the LEN() function to filter the empty strings in the Continent column and the IS NOT NULL to make sure no NULL values were in the new table view 
+  --drop table #covid_summary
 Create table #Covid_summary 
 (
 continent varchar(50),
@@ -155,8 +155,6 @@ order by Perc_death desc
 select *, (Total_Death_Count/Total_cases) as Perc_death  
 from #Continent_summary
 order by Perc_death desc
-
-
 
 
 
