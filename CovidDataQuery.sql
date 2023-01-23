@@ -170,3 +170,33 @@ from #Covid_summary
 
   select * from #Covid_summary
   order by date
+
+
+--Creating views for easy acces to the statements since we worked with temporary tables only
+
+  create VIEW Covid_summary_view AS
+select
+  [continent],
+  [location],
+  cast(population as float) as Population,
+  cast(date as date) as Date,
+  cast(new_cases as float) as New_cases,
+  cast(round(cast(total_cases as float), 0) as int) as total_cases,
+  cast(New_deaths as float) as New_deaths,
+  cast(total_deaths as float) as Total_deaths,
+  cast(New_tests as float) as New_tests,
+  cast([total_tests] as float) as Total_tests,
+  cast ([positive_rate] as float) as Positive_rate,
+  cast ([people_fully_vaccinated] as float) as people_fully_vaccinated,
+  cast ([icu_patients] as float) as icu_patients,
+  cast ([hosp_patients] as float) as hosp_patients,
+  cast ([hospital_beds_per_thousand] as float) as hospital_beds_per_thousand
+  from [dbo].[owid-covid-data]
+  where continent is not null and len(continent) > 0
+
+  Create view Continent_summary_view as
+  Select continent, sum(distinct population) as Tot_population, sum(new_cases) as Tot_cases, sum(new_deaths) as Total_Death_Count
+From Covid_summary_view
+Group by continent
+
+--end
